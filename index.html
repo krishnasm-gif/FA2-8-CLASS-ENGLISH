@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASS 8 ENGLISH FA2 - Interactive Quiz & Key</title>
+    <style>
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff6b6b;
+            --bg-light: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 2.2em;
+        }
+        .sub-header {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #555;
+            border-left: 5px solid var(--primary);
+        }
+        
+        /* Quick Jump Navigation Bar */
+        .jump-nav {
+            background: #f1f3f5;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .jump-nav h4 {
+            margin: 0 0 10px 0;
+            color: #444;
+        }
+        .jump-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+        .jump-btn {
+            background: #fff;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .jump-btn:hover, .jump-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .back-to-index-btn {
+            background: var(--accent);
+            color: #fff;
+            border: 1px solid var(--accent);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        .back-to-index-btn:hover {
+            background: #ff5252;
+        }
+
+        .section-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .reading-box {
+            background: #fdfefe;
+            border: 1px solid #e1e8ed;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            font-style: italic;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        
+        .question-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .q-number {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.15em;
+            margin-bottom: 12px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .options li {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .reveal-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 5px;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+        }
+        .reveal-btn:hover {
+            background: #219653;
+        }
+        .reveal-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .answer-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f8f5;
+            border-left: 5px solid #2ecc71;
+            border-radius: 8px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .answer-content {
+            font-weight: 600;
+            color: #0e6655;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+        .telugu-translation {
+            padding: 15px;
+            background: #fef9e7;
+            border-left: 5px solid #f1c40f;
+            border-radius: 6px;
+            font-size: 1em;
+            color: #7d6608;
+            line-height: 1.6;
+        }
+        .telugu-translation strong {
+            color: #b7950b;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.05em;
+        }
+        
+        .question-top-link-container {
+            display: flex;
+            justify-content: flex-end;
+            margin: 10px 0 5px 0;
+        }
+        .top-link {
+            background: #d4ac0d;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .top-link:hover {
+            background: #b7950b;
+        }
+
+        /* Bottom Step-by-Step Navigation Bar */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .nav-btn:hover {
+            background: #3b40a4;
+        }
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="top-index">
+    <h1>VIII CLASS ENGLISH</h1>
+    <div class="sub-header">FORMATIVE ASSESSMENT 2 | Syllabus: Unit-3: Humanity | Marks: 20 | Time: 1:30 Min[cite: 1]</div>
+    
+    <div class="meta-info">
+        <span>Name: _______________________________</span>
+        <span>Roll No.: ________</span>
+        <span>Section: ________</span>
+    </div>
+
+    <!-- Quick Jump Navigation -->
+    <div class="jump-nav" id="jump-nav-section">
+        <h4>Click any question number to jump directly:</h4>
+        <div class="jump-buttons">
+            <button class="jump-btn" onclick="jumpTo(1)">Q1</button>
+            <button class="jump-btn" onclick="jumpTo(2)">Q2</button>
+            <button class="jump-btn" onclick="jumpTo(3)">Q3</button>
+            <button class="jump-btn" onclick="jumpTo(4)">Q4</button>
+            <button class="jump-btn" onclick="jumpTo(5)">Q5</button>
+            <button class="jump-btn" onclick="jumpTo(6)">Q6</button>
+            <button class="jump-btn" onclick="jumpTo(7)">Q7</button>
+            <button class="jump-btn" onclick="jumpTo(8)">Q8</button>
+            <button class="jump-btn" onclick="jumpTo(9)">Q9</button>
+            <button class="jump-btn" onclick="jumpTo(10)">Q10</button>
+            <button class="jump-btn" onclick="jumpTo(11)">Q11</button>
+            <button class="jump-btn" onclick="jumpTo(12)">Q12</button>
+            <button class="jump-btn" onclick="jumpTo(13)">Q13</button>
+            <button class="jump-btn" onclick="jumpTo(14)">Q14</button>
+            <button class="jump-btn" onclick="jumpTo(15)">Q15</button>
+            <button class="jump-btn" onclick="jumpTo(16)">Q16</button>
+        </div>
+        <div>
+            <button class="back-to-index-btn" onclick="scrollToIndex()">⬆ Back to Index / Top</button>
+        </div>
+    </div>
+
+    <!-- ================= SECTION-A ================= -->
+    <div class="section-header">SECTION-A</div>
+    <div class="reading-box">
+        <strong>Read the following passage:</strong><br><br>
+        The Giant had a beautiful garden with soft green grass and lovely flowers. Every afternoon, children used to play there after school. But one day the Giant returned after many years and became angry when he saw the children playing in his garden. He built a high wall around it and put up a notice board saying, "Trespassers will be prosecuted." Soon the garden became dull and covered with snow because Spring did not visit it anymore.[cite: 1]
+    </div>
+
+    <!-- Question 1 -->
+    <div class="question-card" id="card-1">
+        <div class="q-number">1. The Giant's garden had[cite: 1]</div>
+        <ul class="options">
+            <li>(A) dry grass[cite: 1]</li>
+            <li>(B) soft green grass[cite: 1]</li>
+            <li>(C) no flowers[cite: 1]</li>
+            <li>(D) rocks[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(1)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-1">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (B) soft green grass[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: రాక్షసుడి (Giant) తోటలో ఏముంది?<br>
+                వివరణ మరియు విశ్లేషణ: పేరాగ్రాఫ్ ప్రారంభంలోనే "The Giant had a beautiful garden with soft green grass and lovely flowers" అని స్పష్టంగా ఇవ్వబడింది. కాబట్టి రాక్షసుడి తోటలో మృదువైన పచ్చని గడ్డి మరియు అందమైన పువ్వులు ఉన్నాయి. ఇచ్చిన ఆప్షన్లలో (ఎ) ఎండిపోయిన గడ్డి, (బి) మృదువైన పచ్చని గడ్డి, (సి) పువ్వులు లేవు, (డి) బండరాళ్లు ఉన్నాయి. కాబట్టి సరైన మరియు ఖచ్చితమైన సమాధానం ఆప్షన్ (బి).
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-card" id="card-2">
+        <div class="q-number">2. The children used to play in the garden[cite: 1]</div>
+        <ul class="options">
+            <li>(A) in the morning[cite: 1]</li>
+            <li>(B) at night[cite: 1]</li>
+            <li>(C) after school[cite: 1]</li>
+            <li>(D) on Sundays[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(2)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-2">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (C) after school[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: పిల్లలు తోటలో ఎప్పుడు ఆడుకునేవారు?<br>
+                వివరణ మరియు విశ్లేషణ: పాఠ్యభాగంలోని వాక్యం ప్రకారం "Every afternoon, children used to play there after school." అనగా ప్రతిరోజూ మధ్యాహ్నం బడి విడిచిపెట్టిన తర్వాత పిల్లలు ఆ తోటలో ఆడుకోవడానికి వెళ్లేవారు. ఇచ్చిన ఎంపికలలో ఉదయం, రాత్రి, బడి తర్వాత, మరియు ఆదివారాలు అని ఉన్నాయి. కాబట్టి సరైన సమాధానం (సి) బడి విడిచిపెట్టిన తర్వాత.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-card" id="card-3">
+        <div class="q-number">3. The Giant built a high wall because he was[cite: 1]</div>
+        <ul class="options">
+            <li>(A) kind[cite: 1]</li>
+            <li>(B) selfish[cite: 1]</li>
+            <li>(C) generous[cite: 1]</li>
+            <li>(D) cheerful[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(3)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-3">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (B) selfish[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: రాక్షసుడు ఎత్తైన గోడను ఎందుకు నిర్మించాడు అంటే అతను...<br>
+                వివరణ మరియు విశ్లేషణ: రాక్షసుడు చాలా సంవత్సరాల తరువాత తిరిగి వచ్చి పిల్లలు తన తోటలో ఆడుకోవడం చూసి కోపగించుకున్నాడు. ఎవరినీ తన తోటలోకి రానివ్వకూడదనే ఉద్దేశంతో ఎత్తైన గోడ కట్టాడు. ఇది అతని స్వార్థపూరిత స్వభావాన్ని (selfishness) తెలియజేస్తుంది. ఇచ్చిన ఆప్షన్లు: (ఎ) దయగలవాడు, (బి) స్వార్థపరుడు, (సి) ఉదార స్వభావం గలవాడు, (డి) ఉల్లాసంగా ఉండేవాడు. కాబట్టి సరైన సమాధానం (బి) స్వార్థపరుడు.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-card" id="card-4">
+        <div class="q-number">4. Spring did not visit the garden because[cite: 1]</div>
+        <ul class="options">
+            <li>(A) the garden was small[cite: 1]</li>
+            <li>(B) the Giant was selfish[cite: 1]</li>
+            <li>(C) the flowers dried up[cite: 1]</li>
+            <li>(D) children stopped playing[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(4)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-4">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (B) the Giant was selfish[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: తోటను వసంతకాలం ఎందుకు సందర్శించలేదు?<br>
+                వివరణ మరియు విశ్లేషణ: రాక్షసుడి స్వార్థం వల్ల పిల్లలు తోటలోకి రావడం ఆగిపోయింది, దాంతో తోట నిస్తేజంగా మారి మంచుతో కప్పబడిపోయింది. కథాంశం ప్రకారం రాక్షసుడి స్వార్థపూరిత ప్రవర్తనే వసంతకాలం రాకపోవడానికి మూల కారణం. కాబట్టి ఇచ్చిన ఎంపికలలో సరైన సమాధానం (బి) రాక్షసుడు స్వార్థపరుడు కాబట్టి.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question-card" id="card-5">
+        <div class="q-number">5. Why did the children stop playing in the garden?[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(5)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-5">
+            <div class="answer-content">
+                <strong>Answer:</strong> The children stopped playing in the garden because the Giant returned after many years, became angry, built a high wall around it, and put up a notice board saying, "Trespassers will be prosecuted."[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: పిల్లలు తోటలో ఆడటం ఎందుకు మానేశారు?<br>
+                వివరణ మరియు విశ్లేషణ: రాక్షసుడు చాలా సంవత్సరాల తర్వాత తన స్వగృహానికి/తోటకి తిరిగి వచ్చాడు. పిల్లలు తన తోటలో ఆడుకోవడం చూసి తీవ్రంగా కోపగించుకున్నాడు. వారిని పూర్తిగా అడ్డుకోవడానికి తోట చుట్టూ ఎత్తైన గోడను నిర్మించాడు. అంతేకాకుండా "అతిక్రమించి లోపలికి వచ్చువారు శిక్షించబడతారు" (Trespassers will be prosecuted) అనే హెచ్చరిక బోర్డును కూడా ఏర్పాటు చేశాడు. ఈ పరిణామాల కారణంగా పిల్లలు ఆ తోటలోకి వెళ్లడం మానేశారు.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="question-card" id="card-6">
+        <div class="q-number">6. What happened to the Giant's garden after he built the wall?[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(6)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-6">
+            <div class="answer-content">
+                <strong>Answer:</strong> After the Giant built the wall, the garden soon became dull and covered with snow because Spring did not visit it anymore.[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: రాక్షసుడు గోడ కట్టిన తర్వాత అతని తోట ఏమైంది?<br>
+                వివరణ మరియు విశ్లేషణ: రాక్షసుడు ఎత్తైన గోడను నిర్మించి పిల్లలను దూరం చేసిన తర్వాత, ఆ అందమైన తోట తన కళను కోల్పోయింది. తోట త్వరగానే నిస్తేజంగా (dull) తయారైంది మరియు పూర్తిగా మంచుతో (snow) కప్పబడిపోయింది. ఎందుకంటే ఆ తోటలోకి ఇకపై ఎప్పుడూ వసంతకాలం (Spring) రాలేదు.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SECTION-II (POEM) ================= -->
+    <div class="section-header">II. Read the following poem.</div>
+    <div class="reading-box">
+        My mother is the sweetest one,<br>
+        Her love shines like the morning sun,<br>
+        She cares for me throughout the day,<br>
+        And guides me gently on my way.<br>
+        Her words are soft, her heart is kind,<br>
+        A better friend I'll never find,<br>
+        She helps me when I feel afraid,<br>
+        And wipes the tears that sadness made.<br><br>
+        Hearts are gardens,<br>
+        Thoughts are seeds,<br>
+        You can grow flowers,<br>
+        Or you can grow weeds.<br><br>
+        If kindness grows within your heart,<br>
+        Happiness blooms each day,<br>
+        But anger and hatred in the mind<br>
+        Will drive good thoughts away.[cite: 1]
+    </div>
+
+    <!-- Question 7 -->
+    <div class="question-card" id="card-7">
+        <div class="q-number">7. Thoughts are compared to[cite: 1]</div>
+        <ul class="options">
+            <li>(A) flowers[cite: 1]</li>
+            <li>(B) seeds[cite: 1]</li>
+            <li>(C) birds[cite: 1]</li>
+            <li>(D) stars[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(7)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-7">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (B) seeds[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: ఆలోచనలను దేనితో పోల్చారు?<br>
+                వివరణ మరియు విశ్లేషణ: కవితలోని "Hearts are gardens, Thoughts are seeds" అనే లైన్ల ప్రకారం మన హృదయాలను తోటలతో, మనలో మెదిలే ఆలోచనలను విత్తనాలతో (seeds) పోల్చడం జరిగింది. ఇచ్చిన ఎంపికలలో పువ్వులు, విత్తనాలు, పక్షులు, నక్షత్రాలు ఉన్నాయి. కాబట్టి సరైన సమాధానం ఆప్షన్ (బి) విత్తనాలు.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="question-card" id="card-8">
+        <div class="q-number">8. Kindness in our heart brings[cite: 1]</div>
+        <ul class="options">
+            <li>(A) sadness[cite: 1]</li>
+            <li>(B) anger[cite: 1]</li>
+            <li>(C) happiness[cite: 1]</li>
+            <li>(D) fear[cite: 1]</li>
+        </ul>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(8)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-8">
+            <div class="answer-content">
+                <strong>Correct Answer:</strong> (C) happiness[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: మన హృదయంలో దయ ఉండటం వల్ల ఏమి వస్తుంది?<br>
+                వివరణ మరియు విశ్లేషణ: కవితలో "If kindness grows within your heart, Happiness blooms each day" అని చెప్పబడింది. అనగా మన హృదయంలో దయాగుణం పెరిగితే ప్రతిరోజూ సంతోషం వికసిస్తుంది. ఇచ్చిన ఆప్షన్లలో బాధ, కోపం, సంతోషం, భయం ఉన్నాయి. కాబట్టి సరైన సమాధానం (సి) సంతోషం.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="question-card" id="card-9">
+        <div class="q-number">9. What happens when anger grows in the mind?[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(9)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-9">
+            <div class="answer-content">
+                <strong>Answer:</strong> When anger and hatred grow in the mind, they will drive good thoughts away.[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: మనస్సులో కోపం పెరిగినప్పుడు ఏమి జరుగుతుంది?<br>
+                వివరణ మరియు విశ్లేషణ: కవిత చివరలో కవి "But anger and hatred in the mind will drive good thoughts away" అని స్పష్టం చేశారు. దీని అర్థం ఏమిటంటే, మానవుని మనస్సులో కోపం మరియు ద్వేషం అనే చెడు భావాలు పెరిగితే, అవి మనలోని మంచి ఆలోచనలను పూర్తిగా తరిమేస్తాయి లేదా దూరం చేస్తాయి.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="question-card" id="card-10">
+        <div class="q-number">10. What message do you learn from the poem?[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(10)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-10">
+            <div class="answer-content">
+                <strong>Answer:</strong> We learn that our hearts are like gardens and thoughts are like seeds. If we cultivate kindness, happiness blooms, whereas anger and hatred drive good thoughts away.[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: ఈ కవిత నుండి మీరు నేర్చుకున్న సందేశం ఏమిటి?<br>
+                వివరణ మరియు విశ్లేషణ: ఈ కవిత ద్వారా మనం చాలా మంచి జీవిత సత్యాన్ని నేర్చుకుంటాము. మన హృదయాలు ఒక తోట లాంటివని, మన ఆలోచనలు అందులో నాటే విత్తనాల లాంటివని తెలుసుకుంటాము. మనం మనసులో దయను పెంపొందించుకుంటే సంతోషం వికసిస్తుంది; ఒకవేళ కోపం, ద్వేషం వంటి కలుపు మొక్కల వంటివి పెరిగితే అవి మన మంచి ఆలోచనలను నాశనం చేస్తాయి. కాబట్టి ఎప్పుడూ మంచి ఆలోచనలు మరియు దయను కలిగి ఉండాలని ఈ కవిత బోధిస్తుంది.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SECTION-III (GRAMMAR) ================= -->
+    <div class="section-header">III. Read the following passage and rewrite the underlined sentences as directed.</div>
+    <div class="reading-box">
+        The children were happy <u>(11)</u> to play in the beautiful <u>(12)</u> garden. The Giant later became kind <u>(13)</u> and loving towards them. The garden was filled with colourful flowers <u>(14)</u> and singing birds.[cite: 1]
+    </div>
+
+    <!-- Question 11 -->
+    <div class="question-card" id="card-11">
+        <div class="q-number">11. Write the antonym of the word 'happy'.[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(11)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-11">
+            <div class="answer-content">
+                <strong>Answer:</strong> Sad / Unhappy[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: 'happy' అనే పదానికి వ్యతిరేక పదం (Antonym) రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ: 'happy' అనగా సంతోషంగా ఉండటం. దీనికి వ్యతిరేక పదాలుగా 'sad' (విచారంగా) లేదా 'unhappy' (సంతోషంగా లేని) అని రాయవచ్చు. వ్యాకరణ పరంగా పదాల వ్యతిరేకార్థాలను గుర్తించడం ద్వారా పదసంపద (Vocabulary) మెరుగవుతుంది.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="question-card" id="card-12">
+        <div class="q-number">12. Write the synonym of the word 'beautiful'. (lovely)[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(12)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-12">
+            <div class="answer-content">
+                <strong>Answer:</strong> Lovely / Pretty / Attractive[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: 'beautiful' అనే పదానికి సమానార్థక పదం (Synonym) రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ: 'beautiful' అనగా అందమైన అని అర్థం. పేరాగ్రాఫ్ సూచన ప్రకారం దీనికి సమానమైన పదాలుగా 'lovely', 'pretty' లేదా 'attractive' అని రాయవచ్చు.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="question-card" id="card-13">
+        <div class="q-number">13. Write the antonym of the word 'kind'. (cruel/unkind)[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(13)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-13">
+            <div class="answer-content">
+                <strong>Answer:</strong> Cruel / Unkind[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: 'kind' అనే పదానికి వ్యతిరేక పదం (Antonym) రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ: 'kind' అనగా దయగల లేదా జాలి గల వ్యక్తి. దీనికి వ్యతిరేక పదం క్రూరమైన లేదా దయ లేని అని అర్థం వచ్చేలా 'cruel' లేదా 'unkind' అని రాయాలి.
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 14 -->
+    <div class="question-card" id="card-14">
+        <div class="q-number">14. Write the singular of the word 'flowers'. (Flower)[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(14)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-14">
+            <div class="answer-content">
+                <strong>Answer:</strong> Flower[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: 'flowers' అనే బహువచన పదానికి ఏకవచనం (Singular) రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ: 'flowers' అనేది బహువచనం (Plural). దీనికి ఏకవచనం 'flower' (పువ్వు) అవుతుంది. నామవాచకాలలో ఏకవచన, బహువచన రూపాలను మార్చే పద్ధతి ఇది.
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SECTION-IV (EDITING) ================= -->
+    <div class="section-header">IV. Edit the following paragraph for errors in punctuation marks, capitalisation and spellings.</div>
+    
+    <!-- Question 15 -->
+    <div class="question-card" id="card-15">
+        <div class="q-number">15. "the giant said why are you playing in my garden this garden belongs to me away at once children were frightened and ran away."[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(15)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-15">
+            <div class="answer-content">
+                <strong>Corrected Paragraph:</strong><br>
+                "The Giant said, 'Why are you playing in my garden? This garden belongs to me. Away at once!' Children were frightened and ran away."[cite: 1]
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: ఇవ్వబడిన పేరాగ్రాఫ్‌ను విరామ చిహ్నాలు (Punctuation marks), పెద్ద అక్షరాలు (Capitalisation) మరియు అక్షరదోషాల పరంగా సరిదిద్ది తిరిగి రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ:<br>
+                1. వాక్యం ప్రారంభంలో 'The' అనే పదం క్యాపిటల్ లెటర్ 'T' తో మొదలుకావాలి. అలాగే 'Giant' అనే నామవాచకం మొదటి అక్షరం పెద్దదిగా ఉండాలి.<br>
+                2. ప్రత్యక్ష సంభాషణను సూచించడానికి కొటేషన్ మార్కులు మరియు కామా (') వాడాలి.<br>
+                3. ప్రశ్నాార్థక వాక్యం కాబట్టి 'garden?' దగ్గర ప్రశ్నార్థకం ఉంచాలి.<br>
+                4. ఆజ్ఞాపించే వాక్యం చివర ఆశ్చర్యార్థకం (!) పెట్టాలి.<br>
+                సరిదిద్దబడిన రూపం: "The Giant said, 'Why are you playing in my garden? This garden belongs to me. Away at once!' Children were frightened and ran away." (రాక్షసుడు అన్నాడు, 'మీరు నా తోటలో ఎందుకు ఆడుతున్నారు? ఈ తోట నాది. వెంటనే ఇక్కడి నుండి వెళ్ళిపోండి!' పిల్లలు భయపడి పారిపోయారు.)
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SECTION-V (CREATIVE WRITING) ================= -->
+    <div class="section-header">V. Creative Writing</div>
+    
+    <!-- Question 16 -->
+    <div class="question-card" id="card-16">
+        <div class="q-number">16. Creative Writing: Write a conversation between the Giant and the little boy OR Write a diary entry as the Giant.[cite: 1]</div>
+        <div class="question-top-link-container">
+            <button class="top-link" onclick="scrollToIndex()">Top ⬆</button>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(16)">Click to View Clickable Answer</button>
+        <div class="answer-box" id="ans-16">
+            <div class="answer-content">
+                <strong>Option 1: Conversation between the Giant and the Little Boy</strong><br>
+                <strong>Giant:</strong> Why are you crying, little boy? Why couldn't you reach the branches?<br>
+                <strong>Little Boy:</strong> Thank you for helping me, Giant. I was trying to climb up to touch the lovely flowers, but my arms are too short and I am too small.<br>
+                <strong>Giant:</strong> Don't cry, little one. From today, this garden is yours and all your friends'. The wall is down forever!<br><br>
+                <strong>Option 2: Diary Entry (As the Giant)</strong><br>
+                <em>Date:</em> 22 June 2026<br>
+                <em>Dear Diary,</em><br>
+                Today is the happiest day of my life. For years, I lived with a bitter and selfish heart, keeping children out of my garden, which brought only snow and freezing winter. But today, when I helped a little boy reach the tree branches, spring miraculously returned! I immediately knocked down the high wall. My garden now belongs to the children, and my heart feels truly warm and peaceful.
+            </div>
+            <div class="telugu-translation">
+                <strong>తెలుగులో సుదీర్ఘ అనువాదం (Long Telugu Translation):</strong><br>
+                ప్రశ్న: సృజనాత్మక రచన: రాక్షసునికి మరియు చిన్న బాలునికి మధ్య సంభాషణ లేదా రాక్షసుడి కోణం నుండి డైరీ ఎంట్రీ రాయండి.<br>
+                వివరణ మరియు విశ్లేషణ:<br>
+                <strong>సంభాషణ తెలుగు అనువాదం:</strong><br>
+                <strong>రాక్షసుడు:</strong> చిన్న బాబూ, ఎందుకు ఏడుస్తున్నావు? నువ్వు కొమ్మలను ఎందుకు అందుకోలేకపోయావు?<br>
+                <strong>చిన్న బాలుడు:</strong> నన్ను పైకి ఎత్తినందుకు ధన్యవాదాలు రాక్షసుడా. నేను అందమైన పువ్వులను తాకడానికి ఎక్కాలని ప్రయత్నించాను, కానీ నేను చాలా చిన్నవాడిని.<br>
+                <strong>రాక్షసుడు:</strong> ఏడవకండి బాబూ. ఇక నుండి ఈ తోట మీ అందరిదీ. నేను ఎత్తైన గోడను కూల్చివేశాను!<br><br>
+                <strong>డైరీ ఎంట్రీ తెలుగు అనువాదం:</strong><br>
+                <em>తేదీ:</em> 22 జూన్ 2026<br>
+                <em>ప్రియమైన డైరీ,</em><br>
+                ఈరోజు నా జీవితంలో అత్యంత సంతోషకరమైన రోజు. సంవత్సరాలుగా నేను స్వార్థంతో పిల్లలను నా తోటలోకి రానీయకుండా చేశాను, దానివల్ల నా తోటలో ఎప్పుడూ శీతాకాలమే ఉండిపోయింది. కానీ ఈరోజు ఒక చిన్న బాబుకి చెట్టు ఎక్కడానికి సహాయం చేసినప్పుడు, అద్భుతంగా వసంతకాలం తిరిగి వచ్చింది! నేను వెంటనే ఆ పెద్ద గోడను పడగొట్టాను. నా తోట ఇప్పుడు పిల్లలందరిదీ అయింది, నా మనసులో ఎనలేని ప్రశాంతత మరియు ఆనందం నిండింది.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Footer -->
+    <div class="nav-footer">
+        <button class="nav-btn" id="prevCardBtn" onclick="navigateCard(-1)" disabled>← Back</button>
+        <button class="nav-btn" id="nextCardBtn" onclick="navigateCard(1)">Next →</button>
+    </div>
+
+</div>
+
+<script>
+    let activeCardIndex = 1;
+    const totalCards = 16;
+
+    function toggleAnswer(id) {
+        const ansBox = document.getElementById('ans-' + id);
+        if (ansBox.style.display === 'block') {
+            ansBox.style.display = 'none';
+        } else {
+            ansBox.style.display = 'block';
+        }
+    }
+
+    function jumpTo(index) {
+        activeCardIndex = index;
+        updateView();
+    }
+
+    function scrollToIndex() {
+        const jumpNavElement = document.getElementById('jump-nav-section');
+        if (jumpNavElement) {
+            jumpNavElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function navigateCard(direction) {
+        activeCardIndex += direction;
+        if (activeCardIndex < 1) activeCardIndex = 1;
+        if (activeCardIndex > totalCards) activeCardIndex = totalCards;
+        updateView();
+    }
+
+    function updateView() {
+        // Scroll smoothly to the target question card
+        const cardElement = document.getElementById('card-' + activeCardIndex);
+        if (cardElement) {
+            cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Highlight active jump button
+        const jumpButtons = document.querySelectorAll('.jump-btn');
+        jumpButtons.forEach((btn, idx) => {
+            if (idx + 1 === activeCardIndex) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Update footer buttons state
+        document.getElementById('prevCardBtn').disabled = (activeCardIndex === 1);
+        document.getElementById('nextCardBtn').disabled = (activeCardIndex === totalCards);
+    }
+
+    // Initialize first state
+    updateView();
+</script>
+
+</body>
+</html>
